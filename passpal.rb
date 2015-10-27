@@ -151,7 +151,7 @@ class WordFrequencyAgent < Agent
       })
     "Total words: \t" + @total.to_s +
       "\nUnique words: \t" + unique.to_s + ' (' + ((unique.to_f/@total.to_f)*100).round(2).to_s + ' %)' +
-      "\n\nWord frequency, sorted by count, top " + $top.to_s + "\n" + table.to_s
+      "\n\nWord frequency, sorted by count, top " + $top.to_s + "\n" + table.to_html
   end
 end
 
@@ -191,7 +191,7 @@ class BaseWordFrequencyAgent < Agent
         :data => output,
         :column_names => ['Word', 'Count', 'Of total']
       })
-    "Base word (len>=3) frequency, sorted by count, top " + $top.to_s + "\n" + table.to_s
+    "Base word (len>=3) frequency, sorted by count, top " + $top.to_s + "\n" + table.to_html
   end
 end
 
@@ -218,7 +218,7 @@ class LengthFrequencyAgent < Agent
         :data => output,
         :column_names => ['Length', 'Count', 'Of total']
       })  
-    "Length frequency, sorted by length, full table\n" + table.to_s
+    "Length frequency, sorted by length, full table\n" + table.to_html
   end
 end
 
@@ -266,8 +266,8 @@ class CharsetFrequencyAgent < Agent
         :data => output,
         :column_names => ['Charset', 'Count', 'Of total', 'Count/keyspace']
       })
-    "Charset frequency, sorted by count, full table\n" + table.sort_rows_by("Count", :order => :descending).to_s + 
-      "\nCharset frequency, sorted by count/keyspace, full table\n" + table.sort_rows_by("Count/keyspace", :order => :descending).to_s
+    "Charset frequency, sorted by count, full table\n" + table.sort_rows_by("Count", :order => :descending).to_html + 
+      "\nCharset frequency, sorted by count/keyspace, full table\n" + table.sort_rows_by("Count/keyspace", :order => :descending).to_html
   end
 end
 
@@ -377,9 +377,9 @@ class HashcatMaskFrequencyAgent < Agent
         :data => output_by_keyspace,
         :column_names => ['Mask', 'Count', 'Of total', 'Count/keyspace']
       })
-    "Hashcat mask frequency, sorted by count, top " + $top.to_s + "\n" + table.sort_rows_by("Count", :order => :descending).to_s +
+    "Hashcat mask frequency, sorted by count, top " + $top.to_s + "\n" + table.sort_rows_by("Count", :order => :descending).to_html +
       "Words that didn't match any ?l?u?d?s mask: " + @otherCount.to_s + ' (' + ((@otherCount.to_f/@total)*100).round(4).to_s + ' %)' +
-      "\n\nHashcat mask frequency, sorted by count/keyspace, top " + $top.to_s + "\n" + table2.sort_rows_by("Count/keyspace", :order => :descending).to_s +
+      "\n\nHashcat mask frequency, sorted by count/keyspace, top " + $top.to_s + "\n" + table2.sort_rows_by("Count/keyspace", :order => :descending).to_html +
       "Words that didn't match any ?l?u?d?s mask: " + @otherCount.to_s + ' (' + ((@otherCount.to_f/@total)*100).round(4).to_s + ' %)' + "\n"
   end
 end
@@ -443,7 +443,7 @@ class CharsetPositionAgent < Agent
         :column_names => ['Charset\Index', '0 (first char)', 1, 2, -3, -2, '-1 (last char)']
       })
     @results = nil
-    "Charset distribution of characters in beginning and end of words (len>=6)\n" + table_f.to_s
+    "Charset distribution of characters in beginning and end of words (len>=6)\n" + table_f.to_html
   end
 end
 
@@ -492,7 +492,7 @@ class CharacterFrequencyAgent < Agent
     "Total characters: \t" + @charCount.to_s +
       "\nUnique characters: \t" + unique.to_s +
       "\nTop 50 characters: \t" + '' + charset_string[0..49] +
-      "\n\nCharacter frequency, sorted by count, top " + $top.to_s + "\n" + table.sub_table(0...$top.to_i).to_s
+      "\n\nCharacter frequency, sorted by count, top " + $top.to_s + "\n" + table.sub_table(0...$top.to_i).to_html
   end
 end
 
@@ -519,7 +519,7 @@ class SymbolFrequencyAgent < Agent
         :data => @symbols,
         :column_names => %w[Symbol Count]
       })
-    "Symbol frequency, sorted by count, top " + $top.to_s + "\n" + table.sort_rows_by("Count", :order => :descending).sub_table(0...$top.to_i).to_s
+    "Symbol frequency, sorted by count, top " + $top.to_s + "\n" + table.sort_rows_by("Count", :order => :descending).sub_table(0...$top.to_i).to_html
   end
 end
 
